@@ -63,6 +63,8 @@ export interface StreamLiveData {
   isTransferable: boolean
   isDepleted: boolean
   asset: Address
+  minFeeWei: bigint
+  streamedAmount: bigint
 }
 
 /**
@@ -206,5 +208,5 @@ export function getStatusLabel(status: number): string {
  * Create Sablier app URL for a stream
  */
 export function createSablierStreamUrl(chainId: number, streamId: bigint): string {
-  return `https://app.sablier.com/stream/${chainId}/${streamId}`
+  return `https://app.sablier.com/vesting/stream/LK2-${chainId}-${streamId}`
 }

@@ -113,11 +113,7 @@ export function validateSablierStream(params: StreamValidationParams): Validatio
   }
 
   // When cliff time is non-zero
-  if (
-    Number.isFinite(params.cliffTime) &&
-    params.cliffTime >= 0 &&
-    params.cliffTime > 0
-  ) {
+  if (Number.isFinite(params.cliffTime) && params.cliffTime > 0) {
     // Start time must be strictly less than cliff time
     if (
       Number.isFinite(params.startTime) &&

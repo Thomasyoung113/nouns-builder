@@ -80,16 +80,16 @@ export const DecodedDisplay: React.FC<{
     // The transaction already has decoded args, but we need the raw calldata
     // Since we don't have direct access to calldata here, we'll extract from args
     try {
-      // Get lockup, asset, and batch from args
+      // Get lockup, token, and batch from args
       const lockupArg = transaction.args['lockup'] || transaction.args['_lockup']
-      const assetArg = transaction.args['asset'] || transaction.args['_asset']
+      const tokenArg = transaction.args['token'] || transaction.args['_token']
       const batchArg = transaction.args['batch'] || transaction.args['_batch']
 
-      if (!lockupArg || !assetArg || !batchArg) return null
+      if (!lockupArg || !tokenArg || !batchArg) return null
 
       return {
-        lockupAddress: lockupArg.value as string,
-        tokenAddress: assetArg.value as string,
+        lockupAddress: lockupArg.value as `0x${string}`,
+        tokenAddress: tokenArg.value as `0x${string}`,
         streams: Array.isArray(batchArg.value) ? batchArg.value : [],
       }
     } catch (e) {
@@ -99,7 +99,7 @@ export const DecodedDisplay: React.FC<{
   }, [transaction.args, transaction.functionName, target, chainId])
 
   // Determine single token address for ERC20 operations
-  const tokenAddress = React.useMemo(() => {
+  const tokenAddress: `0x${string}` | undefined = React.useMemo(() => {
     // For ERC20 transfer/approve, use target
     if (
       transaction.functionName === 'transfer' ||
@@ -107,7 +107,7 @@ export const DecodedDisplay: React.FC<{
       transaction.functionName === 'increaseAllowance' ||
       transaction.functionName === 'decreaseAllowance'
     ) {
-      return target
+      return target as `0x${string}`
     }
 
     // For stream operations, get token from stream data
@@ -116,7 +116,7 @@ export const DecodedDisplay: React.FC<{
     }
 
     // For escrow operations, get token from escrow data
-    return escrowData?.tokenAddress || null
+    return escrowData?.tokenAddress || undefined
   }, [transaction.functionName, target, escrowData, streamData])
 
   // Determine single NFT contract and token ID
@@ -142,7 +142,7 @@ export const DecodedDisplay: React.FC<{
   // Fetch token metadata only if we have a token address
   const { tokenMetadata, isLoading: isTokenLoading } = useTokenMetadataSingle(
     chainId,
-    tokenAddress as `0x${string}` | undefined
+    tokenAddress
   )
 
   // Fetch NFT metadata only if we have NFT info
@@ -169,6 +169,7 @@ export const DecodedDisplay: React.FC<{
       tokenMetadata: tokenMetadata || undefined,
       nftMetadata: nftMetadata || undefined,
       escrowData: escrowData || undefined,
+      streamData: streamData || undefined,
     }
   }, [
     transaction,
@@ -178,6 +179,7 @@ export const DecodedDisplay: React.FC<{
     tokenMetadata,
     nftMetadata,
     escrowData,
+    streamData,
     isLoadingMetadata,
   ])
 

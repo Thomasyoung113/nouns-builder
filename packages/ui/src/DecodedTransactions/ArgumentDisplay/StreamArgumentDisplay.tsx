@@ -37,33 +37,9 @@ export const StreamArgumentDisplay: React.FC<StreamArgumentDisplayProps> = ({
     return <BaseArgumentDisplay name={arg.name} value={arg.value} />
   }
 
-  // Handle token address
-  if (arg.name === 'asset' || arg.name === '_asset') {
-    return (
-      <Stack gap={'x1'}>
-        <Flex>
-          {arg.name}: {arg.value}
-        </Flex>
-        {tokenMetadata && (
-          <Flex pl="x4" align="center" gap="x2">
-            {tokenMetadata.logo && (
-              <img
-                src={tokenMetadata.logo}
-                alt={tokenMetadata.symbol}
-                loading="lazy"
-                decoding="async"
-                width="16px"
-                height="16px"
-                style={{ maxWidth: '16px', maxHeight: '16px', objectFit: 'contain' }}
-              />
-            )}
-            <Text color="tertiary">
-              {tokenMetadata.name} ({tokenMetadata.symbol})
-            </Text>
-          </Flex>
-        )}
-      </Stack>
-    )
+  // Handle token contract address
+  if (arg.name === 'token' || arg.name === '_token') {
+    return <BaseArgumentDisplay name={arg.name} value={arg.value} />
   }
 
   // Handle batch array of streams
@@ -92,7 +68,7 @@ export const StreamArgumentDisplay: React.FC<StreamArgumentDisplayProps> = ({
 
                 {stream.depositAmount && (
                   <Flex align="center" gap="x1">
-                    <Text>totalAmount:</Text>
+                    <Text>depositAmount:</Text>
                     {tokenMetadata?.logo && (
                       <img
                         src={tokenMetadata.logo}
