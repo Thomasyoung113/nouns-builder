@@ -250,3 +250,31 @@ Please refer to our [contributions guideline](/.github/contributing.md) on how b
 ## Questions?
 
 Feel free to reach out to us via [Discord](https://discord.gg/bTygNksyRb)
+
+## 🚀 Quick Start Guide
+
+### Prerequisites
+- Node.js 16+ 
+- Yarn or npm
+- An Ethereum wallet (MetaMask recommended)
+
+### Installation Steps
+```bash
+# Clone the repository
+git clone https://github.com/BuilderOSS/nouns-builder.git
+
+# Install dependencies
+yarn install
+
+# Set up environment variables
+cp .env.example .env.local
+
+# Start development server
+yarn dev
+```
+
+### Key Features
+- Create and manage DAOs with Nouns-style governance
+- Customizable auction mechanics
+- On-chain artwork generation
+- Treasury management
